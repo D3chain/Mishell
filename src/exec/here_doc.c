@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 18:56:49 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/14 08:57:20 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/17 09:27:02 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	here_doc_capture(struct s_shell *sh,
 		q_del = exp_unquote_str(redir->arg, 0, 0);
 		capture_line_loop(sh, redir, q_del);
 	}
-	(close(redir->fd[0]), close(redir->fd[1]));
+	close(redir->fd[0]);
 	sh_ignore_signal();
 	waitpid(pid, &st, 0);
 	sh_install_signal_mode(0);

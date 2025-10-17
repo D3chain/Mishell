@@ -6,14 +6,14 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 19:35:59 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/16 15:25:23 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/17 12:14:57 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "sh_exe.h"
 
-static int	exe_run_subshell(struct s_shell *sh, struct s_node *sub)
+int	exe_run_subshell(struct s_shell *sh, struct s_node *sub)
 {
 	int	pid;
 	int	st;
@@ -23,10 +23,12 @@ static int	exe_run_subshell(struct s_shell *sh, struct s_node *sub)
 		return (err_per(1, "subshell"));
 	if (pid == 0)
 	{
+		child_install_signal();
 		st = sh_run_node(sh, sub);
 		sh_cleanup(sh);
 		exit(st);
 	}
+	sh_ignore_signal();
 	waitpid(pid, &st, 0);
 	return (wstatus(st));
 }

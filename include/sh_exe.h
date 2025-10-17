@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 19:12:00 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/16 16:14:49 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/17 12:15:09 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int		rd_hdoc_process_all(struct s_shell *sh, struct s_node *node);
 int		sh_run_node(struct s_shell *sh, struct s_node *ast);
 int		exe_run_simple(struct s_shell *sh, struct s_cmd *cmd);
 int		exe_run_pipeline(struct s_shell *sh, struct s_node **v, int n);
+int		exe_run_subshell(struct s_shell *sh, struct s_node *sub);
 
 int		exec_command(struct s_shell *sh, char **argv);
 int		find_valid_path(char **p_path_cmd, char *path_val, char *cmd);

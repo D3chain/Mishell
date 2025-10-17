@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 17:43:32 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/14 09:11:38 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/17 10:56:33 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,29 @@ static int	exp_set_var_str(struct s_shell *sh,
 	struct s_str_b *sb, const char *str, int *i)
 {
 	int				n;
-	int				j;
 	struct s_env	*cur;
 
-	j = *i + 1;
-	if (str[j] == '?')
-		return ((*i)++, sb_puts(sb, ft_itoa(sh->last_status)));
-	if (check_quote(str[j], NULL, NULL))
+	(*i)++;
+	if (str[*i] == '?')
+		return (sb_puts(sb, ft_itoa(sh->last_status)));
+	if (check_quote(str[*i], NULL, NULL))
 		return (0);
-	if (!ft_isalpha(str[j]) && str[j] != '_')
+	if (!ft_isalpha(str[*i]) && str[*i] != '_')
 		return (sb_putc(sb, '$'));
 	n = 0;
-	while (str[j + n] && (ft_isalnum(str[j + n]) || str[j + n] == '_'))
+	while (str[*i + n] && (ft_isalnum(str[*i + n]) || str[*i + n] == '_'))
 		n++;
 	cur = sh->env;
 	while (cur)
 	{
-		if (ft_strncmp(&str[j], cur->key, n) == 0)
+		if (ft_strncmp(&str[*i], cur->key, n) == 0)
 			return (*i += n, sb_puts(sb, cur->val));
 		cur = cur->next;
 	}
 	return (*i += n, 0);
 }
 
-static char	*expanded_var_str(struct s_shell *sh, char *str, int h_doc)
+static char	*expanded_var_str(struct s_shell *sh, char *str, int mode)
 {
 	struct s_str_b	sb;
 	int				sq;
@@ -53,11 +52,13 @@ static char	*expanded_var_str(struct s_shell *sh, char *str, int h_doc)
 	while (str[++i])
 	{
 		check_quote(str[i], &sq, &dq);
-		if (str[i] == '$' && (!sq || h_doc)
+		if (str[i] == '$' && (!sq || mode == 2)
 			&& exp_set_var_str(sh, &sb, str, &i) != 0)
 			return (free(sb.out), NULL);
-		else if (sb_putc(&sb, str[i]) != 0)
+		if (sb_putc(&sb, str[i]) != 0)
 			return (free(sb.out), NULL);
+		if (!str[i])
+			break ;
 	}
 	if (add_buf(&sb) != 0)
 		return (free(sb.out), NULL);

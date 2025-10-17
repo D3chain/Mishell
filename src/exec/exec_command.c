@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 11:22:25 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/16 15:18:35 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/17 11:00:42 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	exec_command(struct s_shell *sh, char **argv)
 	char	*path;
 	int		st;
 
-	if (!argv || !argv[0])
+	if (!argv || !argv[0] || !argv[0][0])
 		(sh_cleanup(sh), exit(0));
 	st = find_valid_path(&path, get_path_val(sh->env), argv[0]);
 	if (st != 0)

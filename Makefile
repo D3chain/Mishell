@@ -6,7 +6,7 @@
 #    By: echatela <echatela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/05 12:02:13 by echatela          #+#    #+#              #
-#    Updated: 2025/10/16 16:59:57 by echatela         ###   ########.fr        #
+#    Updated: 2025/10/17 10:09:43 by echatela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SUBDIRS		:=	core lexer parser expand exec builtins env err utils
 CORE_SRCS		:=	repl.c signals.c print_tree.c
 LEXER_SRCS		:=	lexer.c tok.c
 PARSER_SRCS		:=	parser.c par_cmd.c free_tree.c
-EXPAND_SRCS		:=	expand.c exp_var.c exp_wc.c exp_unquote.c
+EXPAND_SRCS		:=	expand.c exp_var.c exp_wc.c exp_unquote.c exp_split_arg.c
 BUILTINS_SRCS	:=	pwd.c cd.c echo.c env.c exit.c export.c unset.c
 EXEC_SRCS		:=	exe_run.c exe_pipeline.c exe_simple.c exec_command.c redir.c here_doc.c exe_path.c exe_builtin.c
 ENV_SRCS		:=	env_create_list.c env_create_tab.c env_new_utils.c env_new.c

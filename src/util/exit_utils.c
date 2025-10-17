@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 16:29:25 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/16 14:09:41 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/17 12:05:03 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,12 @@ int	wstatus(int st)
 	if (WIFEXITED(st))
 		return (WEXITSTATUS(st));
 	if (WIFSIGNALED(st))
-		return (WTERMSIG(st) + 128);
+	{
+		if (WTERMSIG(st) == SIGINT)
+			return (write(2, "\n", 1), 130);
+		if (WTERMSIG(st) == SIGQUIT)
+			return (write(2, "Quit (core dumped)\n", 20), 131);
+	}
 	return (1);
 }
 

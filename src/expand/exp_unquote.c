@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 07:55:23 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/16 09:06:15 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/17 08:57:26 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	exp_unquote_str(char *str, int sq, int dq)
 	int	j;
 
 	is_quote = 0;
-	printf("%s\n", str);
 	len = ft_strlen(str);
 	i = 0;
 	j = 0;

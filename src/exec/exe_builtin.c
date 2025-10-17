@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 16:59:01 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/16 17:00:55 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/17 12:12:16 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,13 @@ int	exec_builtin(struct s_shell *sh, int std_fds[2], char **argv)
 
 	if (ft_strcmp(argv[0], "exit") == 0)
 	{
-		(close(std_fds[0]), close(std_fds[1]));
+		if (std_fds)
+			(close(std_fds[0]), close(std_fds[1]));
 		return (sh_exit(sh, argv));
 	}
 	st = bi_fn[is_builtin(argv[0])](sh, argv);
-	std_reset_fds(std_fds);
+	if (std_fds)
+		std_reset_fds(std_fds);
 	return (st);
 }
 

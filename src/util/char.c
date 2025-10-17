@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 15:26:50 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/14 07:51:32 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/17 09:39:24 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,14 @@ int	are_quotes_closed(char *s)
 	if (sq || dq)
 		return (0);
 	return (1);
+}
+
+void	free_tab_str(char **tab)
+{
+	int	i;
+
+	i = -1;
+	while (tab[++i])
+		free(tab[i]);
+	free(tab);
 }
