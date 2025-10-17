@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 09:28:07 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/17 10:07:18 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/17 14:33:03 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,30 +37,29 @@ void	unblank_str(char *str, int sq, int dq)
 		str[j++] = 0;
 }
 
-int	split_arg(struct s_vec *arg_vec, char *arg)
+int	split_arg(struct s_vec *arg_vec, char *arg, int sq, int dq)
 {
 	char	*splited;
-	int		sq;
-	int		dq;
 	int		i;
 
-	sq = 0;
-	dq = 0;
 	while (is_blank(*arg))
 		arg++;
 	if (!*arg)
 		return (0);
 	i = -1;
-	while (++i)
+	while (arg[++i])
 	{
 		check_quote(arg[i], &sq, &dq);
-		if (!arg[i] || (is_blank(arg[i]) && !sq && !dq))
+		if (is_blank(arg[i]) && !sq && !dq)
 		{
 			splited = ft_substr(arg, 0, i);
 			if (!splited || vec_push(arg_vec, &splited) != 0)
 				return (1);
-			return (split_arg(arg_vec, arg + i));
+			return (split_arg(arg_vec, arg + i, 0, 0));
 		}
 	}
+	splited = ft_substr(arg, 0, i);
+	if (!splited || vec_push(arg_vec, &splited) != 0)
+		return (1);
 	return (0);
 }

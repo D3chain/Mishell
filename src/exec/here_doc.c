@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 18:56:49 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/17 09:27:02 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:58:51 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	capture_line_loop(struct s_shell *sh,
 		line = readline("> ");
 		if (g_sigstate == SIGINT || !line || ft_strcmp(redir->arg, line) == 0)
 		{
-			(close(redir->fd[0]), close(redir->fd[1]));
+			(close(redir->fd[0]), close(redir->fd[1]), sh_cleanup(sh));
 			if (!line && g_sigstate != SIGINT)
 				err_msg(2, "warning", "here-document delimited by end-of-file");
 			if (line)
@@ -37,7 +37,7 @@ static int	capture_line_loop(struct s_shell *sh,
 		if (!q_del && expand_var(sh, &line, 2) != 0)
 		{
 			(close(redir->fd[0]), close(redir->fd[1]), free(line));
-			exit(2);
+			(sh_cleanup(sh), exit(2));
 		}
 		write(redir->fd[1], line, ft_strlen(line));
 		free(line);
@@ -52,6 +52,7 @@ static int	here_doc_capture(struct s_shell *sh,
 	int		q_del;
 	int		st;
 	
+	sh_ignore_signal();
 	if (pipe(redir->fd) != 0)
 		return (1);
 	pid = fork();
@@ -63,14 +64,12 @@ static int	here_doc_capture(struct s_shell *sh,
 		q_del = exp_unquote_str(redir->arg, 0, 0);
 		capture_line_loop(sh, redir, q_del);
 	}
-	close(redir->fd[0]);
-	sh_ignore_signal();
+	close(redir->fd[1]);
 	waitpid(pid, &st, 0);
-	sh_install_signal_mode(0);
-	if (WIFEXITED(st) && WEXITSTATUS(st) == 2)
-		return (2);
-	else if (WIFEXITED(st) && WEXITSTATUS(st) == 130)
-		return (g_sigstate = SIGINT, 130);
+	if (WIFEXITED(st))
+		return (WEXITSTATUS(st));
+	else if (WIFSIGNALED(st))
+		return (g_sigstate = SIGINT, WTERMSIG(st));
 	return (0);
 }
 

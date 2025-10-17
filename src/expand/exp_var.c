@@ -6,11 +6,24 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 17:43:32 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/17 10:56:33 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/17 15:50:58 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+static int	exp_status(int st, struct s_str_b *sb)
+{
+	char	*str_st;
+
+	str_st = ft_itoa(st);
+	if (!str_st)
+		return (1);
+	if (sb_puts(sb, str_st) != 0)
+		return (free(str_st), 1);
+	free(str_st);
+	return (0);
+}
 
 static int	exp_set_var_str(struct s_shell *sh,
 	struct s_str_b *sb, const char *str, int *i)
@@ -20,7 +33,7 @@ static int	exp_set_var_str(struct s_shell *sh,
 
 	(*i)++;
 	if (str[*i] == '?')
-		return (sb_puts(sb, ft_itoa(sh->last_status)));
+		return ((*i)++, exp_status(sh->last_status, sb));
 	if (check_quote(str[*i], NULL, NULL))
 		return (0);
 	if (!ft_isalpha(str[*i]) && str[*i] != '_')
@@ -55,7 +68,7 @@ static char	*expanded_var_str(struct s_shell *sh, char *str, int mode)
 		if (str[i] == '$' && (!sq || mode == 2)
 			&& exp_set_var_str(sh, &sb, str, &i) != 0)
 			return (free(sb.out), NULL);
-		if (sb_putc(&sb, str[i]) != 0)
+		else if (sb_putc(&sb, str[i]) != 0)
 			return (free(sb.out), NULL);
 		if (!str[i])
 			break ;

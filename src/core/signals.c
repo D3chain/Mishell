@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 17:33:29 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/17 11:49:27 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:50:26 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	sh_install_signal_mode(int mode)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
-void	child_install_signal(void)
+void	child_install_signal(int mode)
 {
 	struct sigaction	sa;
 
@@ -66,6 +66,12 @@ void	child_install_signal(void)
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	sigaction(SIGINT, &sa, NULL);
+	if (mode == 1)
+	{
+		sa.sa_handler = SIG_IGN;
+		sigemptyset(&sa.sa_mask);
+		sa.sa_flags = 0;
+	}
 	sigaction(SIGQUIT, &sa, NULL);
 }
 

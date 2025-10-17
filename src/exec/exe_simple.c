@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 11:29:18 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/17 11:51:12 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:51:57 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	exe_run_simple(struct s_shell *sh, struct s_cmd *cmd)
 		return (err_per(1, "exec"));
 	if (pid == 0)
 	{
-		child_install_signal();
+		child_install_signal(0);
 		st = redir_apply(cmd->redv);
 		if (st != 0)
 			(sh_cleanup(sh), exit(st));

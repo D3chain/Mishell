@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 20:16:40 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/16 09:09:07 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/17 17:27:26 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	dot(const char *pat, char *entry)
 	return (0);
 }
 
-static int	is_expandable(const char *ref, int in_sq, int in_dq)
+int	is_expandable(const char *ref, int in_sq, int in_dq)
 {
 	int	i;
 
@@ -71,20 +71,22 @@ static int	expand_wc_vec(char *ref, struct s_vec *exp_vec)
 	DIR				*dir;
 	struct dirent	*entry;
 	char			*name;
-	int				sq;
-	int				dq;
 
-	sq = 0;
-	dq = 0;
 	if (!is_expandable(ref, 0, 0))
-		return (vec_push(exp_vec, &ref));
+	{
+		name = ft_strdup(ref);
+		if (!name || vec_push(exp_vec, &name) != 0)
+			return (arg_free(name), 1);
+		return (0);
+	}
 	dir = opendir(".");
 	if (!dir)
 		return (vec_free(exp_vec, arg_free), 1);
 	entry = readdir(dir);
 	while (entry != NULL)
 	{
-		if (!dot(ref, entry->d_name) && wc_match(entry->d_name, ref, 0, 0))
+		if ((entry->d_name[0] != '.' || dot(ref, entry->d_name))
+			&& wc_match(entry->d_name, ref, 0, 0))
 		{
 			name = ft_strdup(entry->d_name);
 			if (!name || vec_push(exp_vec, &name) != 0)
@@ -120,5 +122,6 @@ int	expand_wc(char **ref, struct s_vec *argv)
 	while (++i < tmp_vec.len)
 		if (vec_push(argv, &((char **)tmp_vec.data)[i]) != 0)
 			return (vec_free(&tmp_vec, arg_free), err_per(1, "expand"));
+	(free(tmp_vec.data), free(*ref));
 	return (0);
 }

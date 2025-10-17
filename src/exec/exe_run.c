@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 19:35:59 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/17 12:14:57 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:51:47 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	exe_run_subshell(struct s_shell *sh, struct s_node *sub)
 		return (err_per(1, "subshell"));
 	if (pid == 0)
 	{
-		child_install_signal();
+		child_install_signal(0);
 		st = sh_run_node(sh, sub);
 		sh_cleanup(sh);
 		exit(st);
