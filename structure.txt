@@ -1,0 +1,128 @@
+Core/shell : sh_… (sh_init, sh_repl, sh_cleanup).
+Type global : t_shell (plutôt que t_ms qui prête à confusion “millisecondes”).
+
+Lexer : lex_…
+
+Parser/AST : par_…
+
+Expansion : exp_…
+
+Exécution : exe_…
+
+Redirections : rd_…
+
+Builtins : bi_…
+
+Erreurs : err_…
+
+Environnement : env_…
+
+Bonus : évite les underscores initiaux (réservés en C), et reste cohérent (ne mélange pas exec_/exe_).
+
+
+
+
+
+
+
+
+typedef enum e_nodekind { N_SIMPLE, N_SUBSHELL, N_PIPELINE, N_ANDOR } t_nodekind;
+typedef enum e_andor_op { AO_AND, AO_OR } t_andor_op;
+typedef enum e_rtype    { R_IN, R_OUT, R_APP, R_HDOC } t_rtype;
+
+typedef struct s_redir { t_rtype t; char *arg; } t_redir;
+typedef struct s_cmd   { char **argv; t_redir *r; int nr; } t_cmd;
+
+typedef struct s_node t_node;
+struct s_node {
+    t_nodekind k;
+    union {
+        t_cmd simple;                          // N_SIMPLE
+        struct { t_node *list; } subshell;     // N_SUBSHELL → list = N_ANDOR chain
+        struct { t_node **v; int n; } pipeline;// N_PIPELINE → v[i] sont des "command"
+        struct { t_node *lhs; t_andor_op op; t_node *rhs; } andor; // N_ANDOR
+    } u;
+};
+
+
+
+
+
+
+int sh_exec_node(t_shell *sh, t_node *n);
+
+static int sh_exec_simple(t_shell *sh, t_cmd *c);     // builtins/execve + redirs
+static int sh_exec_subshell(t_shell *sh, t_node *list);
+static int sh_exec_pipeline(t_shell *sh, t_node **v, int n); // retourne statut du dernier
+static int sh_exec_andor(t_shell *sh, t_node *n)
+{
+    int st = sh_exec_node(sh, n->u.andor.lhs);
+    if ((n->u.andor.op == AO_AND && st == 0) ||
+        (n->u.andor.op == AO_OR  && st != 0))
+        st = sh_exec_node(sh, n->u.andor.rhs);
+    return st;
+}
+
+int sh_exec_node(t_shell *sh, t_node *n)
+{
+    if (!n) return 0;
+    if (n->k == N_SIMPLE)   return sh_exec_simple(sh, &n->u.simple);
+    if (n->k == N_SUBSHELL) return sh_exec_subshell(sh, n->u.subshell.list);
+    if (n->k == N_PIPELINE) return sh_exec_pipeline(sh, n->u.pipeline.v, n->u.pipeline.n);
+    if (n->k == N_ANDOR)    return sh_exec_andor(sh, n);
+    return 1;
+}
+
+
+
+
+
+
+list      := and_or (';' and_or)*            // bonus ';'
+and_or    := pipeline ( ('&&' | '||') pipeline )*
+pipeline  := command ('|' command)*
+command   := simple | subshell               // redirs font partie du simple
+simple    := argv redirs*
+subshell  := '(' list ')'
+
+
+
+
+
+
+typedef enum e_toktype { T_WORD, T_PIPE, T_LT, T_GT, T_DGT, T_HDOC } t_toktype;
+typedef struct s_tok    { t_toktype t; char *s; unsigned qmask; } t_tok;
+
+typedef enum e_rtype { R_IN, R_OUT, R_APP, R_HDOC } t_rtype;
+typedef struct s_redir { t_rtype t; char *arg; } t_redir;
+
+
+
+
+
+
+
+minishell/
+├─ include/
+│   └─ ms.h                (types centraux + API modules)
+├─ src/
+│   ├─ core/               (boucle REPL, signaux, status global)
+│   │   ├─ repl.c
+│   │   └─ signals.c
+│   ├─ lexer/              (tokens, quotes)
+│   │   ├─ lexer.c
+│   │   └─ tok_utils.c
+│   ├─ parser/             (AST simple: list de commandes + redirs)
+│   │   ├─ parser.c
+│   │   └─ ast.c
+│   ├─ expand/             (env, quotes, split, glob)
+│   │   ├─ expand.c
+│   │   └─ glob.c
+│   ├─ exec/               (redirs, pipes, fork, builtin/execve)
+│   │   ├─ exec.c
+│   │   └─ redir.c
+│   ├─ builtins/           (echo, cd, pwd, export, unset, env, exit)
+│   ├─ env/                (table/envlist, lookup, export format)
+│   ├─ err/                (API erreurs + messages)
+│   └─ util/               (xmalloc, strings, vec, gc)
+└─ Makefile

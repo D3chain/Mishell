@@ -1,0 +1,309 @@
+==556590== Memcheck, a memory error detector
+==556590== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==556590== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==556590== Command: ./minishell
+==556590== Parent PID: 556585
+==556590== 
+==556615== Use of uninitialised value of size 8
+==556615==    at 0x404503: get_path_command (exec_command.c:40)
+==556615==    by 0x404468: find_path (exec_command.c:65)
+==556615==    by 0x404316: exec_command (exec_command.c:88)
+==556615==    by 0x404274: exe_run_simple (exe_simple.c:71)
+==556615==    by 0x403E2D: sh_run_node (exe_run.c:43)
+==556615==    by 0x40148D: sh_process_line (repl.c:43)
+==556615==    by 0x401345: sh_repl (repl.c:59)
+==556615==    by 0x4064AE: main (main.c:40)
+==556615== 
+==556615== Invalid read of size 1
+==556615==    at 0x404503: get_path_command (exec_command.c:40)
+==556615==    by 0x404468: find_path (exec_command.c:65)
+==556615==    by 0x404316: exec_command (exec_command.c:88)
+==556615==    by 0x404274: exe_run_simple (exe_simple.c:71)
+==556615==    by 0x403E2D: sh_run_node (exe_run.c:43)
+==556615==    by 0x40148D: sh_process_line (repl.c:43)
+==556615==    by 0x401345: sh_repl (repl.c:59)
+==556615==    by 0x4064AE: main (main.c:40)
+==556615==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==556615== 
+==556615== 
+==556615== Process terminating with default action of signal 11 (SIGSEGV)
+==556615==  Access not within mapped region at address 0x0
+==556615==    at 0x404503: get_path_command (exec_command.c:40)
+==556615==    by 0x404468: find_path (exec_command.c:65)
+==556615==    by 0x404316: exec_command (exec_command.c:88)
+==556615==    by 0x404274: exe_run_simple (exe_simple.c:71)
+==556615==    by 0x403E2D: sh_run_node (exe_run.c:43)
+==556615==    by 0x40148D: sh_process_line (repl.c:43)
+==556615==    by 0x401345: sh_repl (repl.c:59)
+==556615==    by 0x4064AE: main (main.c:40)
+==556615==  If you believe this happened as a result of a stack
+==556615==  overflow in your program's main thread (unlikely but
+==556615==  possible), you can try to increase the size of the
+==556615==  main thread stack using the --main-stacksize= flag.
+==556615==  The main thread stack size used in this run was 8388608.
+==556615== 
+==556615== FILE DESCRIPTORS: 6 open (3 std) at exit.
+==556615== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==556615==    <inherited from parent>
+==556615== 
+==556615== Open file descriptor 41: /home/echatela/.config/Code/logs/20251016T090322/ptyhost.log
+==556615==    <inherited from parent>
+==556615== 
+==556615== Open file descriptor 3: /home/echatela/Documents/echatela_42/shell_refacto/valgrind.log
+==556615==    <inherited from parent>
+==556615== 
+==556615== 
+==556615== HEAP SUMMARY:
+==556615==     in use at exit: 225,541 bytes in 551 blocks
+==556615==   total heap usage: 738 allocs, 187 frees, 240,185 bytes allocated
+==556615== 
+==556615== 5 bytes in 1 blocks are still reachable in loss record 1 of 93
+==556615==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==556615==    by 0x4054D6: env_new (env_new.c:96)
+==556615==    by 0x404F34: env_create_list (env_create_list.c:52)
+==556615==    by 0x4064FA: sh_init (main.c:25)
+==556615==    by 0x406476: main (main.c:38)
+==556615== 
+==556615== 7 bytes in 1 blocks are still reachable in loss record 3 of 93
+==556615==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==556615==    by 0x406B9E: ft_strjoin (in /home/echatela/Documents/echatela_42/shell_refacto/minishell)
+==556615==    by 0x40616F: add_buf (str_builder.c:19)
+==556615==    by 0x4032C0: expanded_var_str (exp_var.c:62)
+==556615==    by 0x4030F5: expand_var (exp_var.c:93)
+==556615==    by 0x402DE4: expand_variables_cmd (expand.c:42)
+==556615==    by 0x402D2C: expand_command (expand.c:83)
+==556615==    by 0x4041EC: exe_run_simple (exe_simple.c:59)
+==556615==    by 0x403E2D: sh_run_node (exe_run.c:43)
+==556615==    by 0x40148D: sh_process_line (repl.c:43)
+==556615==    by 0x401345: sh_repl (repl.c:59)
+==556615==    by 0x4064AE: main (main.c:40)
+==556615== 
+==556615== 9 bytes in 1 blocks are still reachable in loss record 6 of 93
+==556615==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==556615==    by 0x405519: env_new (env_new.c:99)
+==556615==    by 0x404F34: env_create_list (env_create_list.c:52)
+==556615==    by 0x4064FA: sh_init (main.c:25)
+==556615==    by 0x406476: main (main.c:38)
+==556615== 
+==556615== 14 bytes in 1 blocks are still reachable in loss record 15 of 93
+==556615==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==556615==    by 0x405447: env_new (env_new.c:89)
+==556615==    by 0x404F34: env_create_list (env_create_list.c:52)
+==556615==    by 0x4064FA: sh_init (main.c:25)
+==556615==    by 0x406476: main (main.c:38)
+==556615== 
+==556615== 32 bytes in 1 blocks are still reachable in loss record 26 of 93
+==556615==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==556615==    by 0x405417: env_new (env_new.c:86)
+==556615==    by 0x404F34: env_create_list (env_create_list.c:52)
+==556615==    by 0x4064FA: sh_init (main.c:25)
+==556615==    by 0x406476: main (main.c:38)
+==556615== 
+==556615== 32 bytes in 1 blocks are still reachable in loss record 28 of 93
+==556615==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==556615==    by 0x40694C: ft_calloc (in /home/echatela/Documents/echatela_42/shell_refacto/minishell)
+==556615==    by 0x40274E: par_simple (par_cmd.c:60)
+==556615==    by 0x4025DA: par_command (par_cmd.c:106)
+==556615==    by 0x4023D4: par_pipe (parser.c:20)
+==556615==    by 0x402184: par_and_or (parser.c:49)
+==556615==    by 0x402124: par_list (parser.c:72)
+==556615==    by 0x4022FE: par_build (parser.c:85)
+==556615==    by 0x40142B: sh_process_line (repl.c:38)
+==556615==    by 0x401345: sh_repl (repl.c:59)
+==556615==    by 0x4064AE: main (main.c:40)
+==556615== 
+==556615== 128 bytes in 1 blocks are still reachable in loss record 37 of 93
+==556615==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==556615==    by 0x40694C: ft_calloc (in /home/echatela/Documents/echatela_42/shell_refacto/minishell)
+==556615==    by 0x405F71: vec_reserve (vec.c:57)
+==556615==    by 0x406012: vec_push (vec.c:72)
+==556615==    by 0x403805: expand_wc (exp_wc.c:121)
+==556615==    by 0x402F17: expand_wild_card_cmd (expand.c:66)
+==556615==    by 0x402D4A: expand_command (expand.c:85)
+==556615==    by 0x4041EC: exe_run_simple (exe_simple.c:59)
+==556615==    by 0x403E2D: sh_run_node (exe_run.c:43)
+==556615==    by 0x40148D: sh_process_line (repl.c:43)
+==556615==    by 0x401345: sh_repl (repl.c:59)
+==556615==    by 0x4064AE: main (main.c:40)
+==556615== 
+==556615== 128 bytes in 1 blocks are definitely lost in loss record 38 of 93
+==556615==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==556615==    by 0x40694C: ft_calloc (in /home/echatela/Documents/echatela_42/shell_refacto/minishell)
+==556615==    by 0x405F71: vec_reserve (vec.c:57)
+==556615==    by 0x406012: vec_push (vec.c:72)
+==556615==    by 0x402971: par_word (par_cmd.c:25)
+==556615==    by 0x4027F6: par_simple (par_cmd.c:67)
+==556615==    by 0x4025DA: par_command (par_cmd.c:106)
+==556615==    by 0x4023D4: par_pipe (parser.c:20)
+==556615==    by 0x402184: par_and_or (parser.c:49)
+==556615==    by 0x402124: par_list (parser.c:72)
+==556615==    by 0x4022FE: par_build (parser.c:85)
+==556615==    by 0x40142B: sh_process_line (repl.c:38)
+==556615== 
+==556615== 128 bytes in 1 blocks are definitely lost in loss record 39 of 93
+==556615==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==556615==    by 0x40694C: ft_calloc (in /home/echatela/Documents/echatela_42/shell_refacto/minishell)
+==556615==    by 0x405F71: vec_reserve (vec.c:57)
+==556615==    by 0x406012: vec_push (vec.c:72)
+==556615==    by 0x4038A0: expand_wc_vec (exp_wc.c:80)
+==556615==    by 0x4036BD: expand_wc (exp_wc.c:104)
+==556615==    by 0x402F17: expand_wild_card_cmd (expand.c:66)
+==556615==    by 0x402D4A: expand_command (expand.c:85)
+==556615==    by 0x4041EC: exe_run_simple (exe_simple.c:59)
+==556615==    by 0x403E2D: sh_run_node (exe_run.c:43)
+==556615==    by 0x40148D: sh_process_line (repl.c:43)
+==556615==    by 0x401345: sh_repl (repl.c:59)
+==556615== 
+==556615== 991 bytes in 73 blocks are still reachable in loss record 51 of 93
+==556615==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==556615==    by 0x4054D6: env_new (env_new.c:96)
+==556615==    by 0x404F9B: env_create_list (env_create_list.c:60)
+==556615==    by 0x4064FA: sh_init (main.c:25)
+==556615==    by 0x406476: main (main.c:38)
+==556615== 
+==556615== 2,336 bytes in 73 blocks are still reachable in loss record 65 of 93
+==556615==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==556615==    by 0x405417: env_new (env_new.c:86)
+==556615==    by 0x404F9B: env_create_list (env_create_list.c:60)
+==556615==    by 0x4064FA: sh_init (main.c:25)
+==556615==    by 0x406476: main (main.c:38)
+==556615== 
+==556615== 3,162 bytes in 73 blocks are still reachable in loss record 66 of 93
+==556615==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==556615==    by 0x405519: env_new (env_new.c:99)
+==556615==    by 0x404F9B: env_create_list (env_create_list.c:60)
+==556615==    by 0x4064FA: sh_init (main.c:25)
+==556615==    by 0x406476: main (main.c:38)
+==556615== 
+==556615== 4,153 bytes in 73 blocks are still reachable in loss record 79 of 93
+==556615==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==556615==    by 0x405447: env_new (env_new.c:89)
+==556615==    by 0x404F9B: env_create_list (env_create_list.c:60)
+==556615==    by 0x4064FA: sh_init (main.c:25)
+==556615==    by 0x406476: main (main.c:38)
+==556615== 
+==556615== LEAK SUMMARY:
+==556615==    definitely lost: 256 bytes in 2 blocks
+==556615==    indirectly lost: 0 bytes in 0 blocks
+==556615==      possibly lost: 0 bytes in 0 blocks
+==556615==    still reachable: 10,869 bytes in 299 blocks
+==556615==         suppressed: 214,416 bytes in 250 blocks
+==556615== 
+==556615== Use --track-origins=yes to see where uninitialised values come from
+==556615== For lists of detected and suppressed errors, rerun with: -s
+==556615== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)
+==556590== Invalid read of size 4
+==556590==    at 0x402C70: free_node (free_tree.c:55)
+==556590==    by 0x406411: sh_cleanup (main.c:19)
+==556590==    by 0x401499: sh_process_line (repl.c:44)
+==556590==    by 0x401345: sh_repl (repl.c:59)
+==556590==    by 0x4064AE: main (main.c:40)
+==556590==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==556590== 
+==556590== 
+==556590== Process terminating with default action of signal 11 (SIGSEGV)
+==556590==  Access not within mapped region at address 0x0
+==556590==    at 0x402C70: free_node (free_tree.c:55)
+==556590==    by 0x406411: sh_cleanup (main.c:19)
+==556590==    by 0x401499: sh_process_line (repl.c:44)
+==556590==    by 0x401345: sh_repl (repl.c:59)
+==556590==    by 0x4064AE: main (main.c:40)
+==556590==  If you believe this happened as a result of a stack
+==556590==  overflow in your program's main thread (unlikely but
+==556590==  possible), you can try to increase the size of the
+==556590==  main thread stack using the --main-stacksize= flag.
+==556590==  The main thread stack size used in this run was 8388608.
+==556590== 
+==556590== FILE DESCRIPTORS: 6 open (3 std) at exit.
+==556590== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==556590==    <inherited from parent>
+==556590== 
+==556590== Open file descriptor 41: /home/echatela/.config/Code/logs/20251016T090322/ptyhost.log
+==556590==    <inherited from parent>
+==556590== 
+==556590== Open file descriptor 3: /home/echatela/Documents/echatela_42/shell_refacto/valgrind.log
+==556590==    <inherited from parent>
+==556590== 
+==556590== 
+==556590== HEAP SUMMARY:
+==556590==     in use at exit: 214,839 bytes in 255 blocks
+==556590==   total heap usage: 738 allocs, 483 frees, 240,185 bytes allocated
+==556590== 
+==556590== 7 bytes in 1 blocks are still reachable in loss record 2 of 85
+==556590==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==556590==    by 0x406B9E: ft_strjoin (in /home/echatela/Documents/echatela_42/shell_refacto/minishell)
+==556590==    by 0x40616F: add_buf (str_builder.c:19)
+==556590==    by 0x4032C0: expanded_var_str (exp_var.c:62)
+==556590==    by 0x4030F5: expand_var (exp_var.c:93)
+==556590==    by 0x402DE4: expand_variables_cmd (expand.c:42)
+==556590==    by 0x402D2C: expand_command (expand.c:83)
+==556590==    by 0x4041EC: exe_run_simple (exe_simple.c:59)
+==556590==    by 0x403E2D: sh_run_node (exe_run.c:43)
+==556590==    by 0x40148D: sh_process_line (repl.c:43)
+==556590==    by 0x401345: sh_repl (repl.c:59)
+==556590==    by 0x4064AE: main (main.c:40)
+==556590== 
+==556590== 32 bytes in 1 blocks are still reachable in loss record 24 of 85
+==556590==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==556590==    by 0x40694C: ft_calloc (in /home/echatela/Documents/echatela_42/shell_refacto/minishell)
+==556590==    by 0x40274E: par_simple (par_cmd.c:60)
+==556590==    by 0x4025DA: par_command (par_cmd.c:106)
+==556590==    by 0x4023D4: par_pipe (parser.c:20)
+==556590==    by 0x402184: par_and_or (parser.c:49)
+==556590==    by 0x402124: par_list (parser.c:72)
+==556590==    by 0x4022FE: par_build (parser.c:85)
+==556590==    by 0x40142B: sh_process_line (repl.c:38)
+==556590==    by 0x401345: sh_repl (repl.c:59)
+==556590==    by 0x4064AE: main (main.c:40)
+==556590== 
+==556590== 128 bytes in 1 blocks are still reachable in loss record 33 of 85
+==556590==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==556590==    by 0x40694C: ft_calloc (in /home/echatela/Documents/echatela_42/shell_refacto/minishell)
+==556590==    by 0x405F71: vec_reserve (vec.c:57)
+==556590==    by 0x406012: vec_push (vec.c:72)
+==556590==    by 0x403805: expand_wc (exp_wc.c:121)
+==556590==    by 0x402F17: expand_wild_card_cmd (expand.c:66)
+==556590==    by 0x402D4A: expand_command (expand.c:85)
+==556590==    by 0x4041EC: exe_run_simple (exe_simple.c:59)
+==556590==    by 0x403E2D: sh_run_node (exe_run.c:43)
+==556590==    by 0x40148D: sh_process_line (repl.c:43)
+==556590==    by 0x401345: sh_repl (repl.c:59)
+==556590==    by 0x4064AE: main (main.c:40)
+==556590== 
+==556590== 128 bytes in 1 blocks are definitely lost in loss record 34 of 85
+==556590==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==556590==    by 0x40694C: ft_calloc (in /home/echatela/Documents/echatela_42/shell_refacto/minishell)
+==556590==    by 0x405F71: vec_reserve (vec.c:57)
+==556590==    by 0x406012: vec_push (vec.c:72)
+==556590==    by 0x402971: par_word (par_cmd.c:25)
+==556590==    by 0x4027F6: par_simple (par_cmd.c:67)
+==556590==    by 0x4025DA: par_command (par_cmd.c:106)
+==556590==    by 0x4023D4: par_pipe (parser.c:20)
+==556590==    by 0x402184: par_and_or (parser.c:49)
+==556590==    by 0x402124: par_list (parser.c:72)
+==556590==    by 0x4022FE: par_build (parser.c:85)
+==556590==    by 0x40142B: sh_process_line (repl.c:38)
+==556590== 
+==556590== 128 bytes in 1 blocks are definitely lost in loss record 35 of 85
+==556590==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==556590==    by 0x40694C: ft_calloc (in /home/echatela/Documents/echatela_42/shell_refacto/minishell)
+==556590==    by 0x405F71: vec_reserve (vec.c:57)
+==556590==    by 0x406012: vec_push (vec.c:72)
+==556590==    by 0x4038A0: expand_wc_vec (exp_wc.c:80)
+==556590==    by 0x4036BD: expand_wc (exp_wc.c:104)
+==556590==    by 0x402F17: expand_wild_card_cmd (expand.c:66)
+==556590==    by 0x402D4A: expand_command (expand.c:85)
+==556590==    by 0x4041EC: exe_run_simple (exe_simple.c:59)
+==556590==    by 0x403E2D: sh_run_node (exe_run.c:43)
+==556590==    by 0x40148D: sh_process_line (repl.c:43)
+==556590==    by 0x401345: sh_repl (repl.c:59)
+==556590== 
+==556590== LEAK SUMMARY:
+==556590==    definitely lost: 256 bytes in 2 blocks
+==556590==    indirectly lost: 0 bytes in 0 blocks
+==556590==      possibly lost: 0 bytes in 0 blocks
+==556590==    still reachable: 167 bytes in 3 blocks
+==556590==         suppressed: 214,416 bytes in 250 blocks
+==556590== 
+==556590== For lists of detected and suppressed errors, rerun with: -s
+==556590== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
