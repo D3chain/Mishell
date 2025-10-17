@@ -3,24 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_create_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:32:55 by garivoir          #+#    #+#             */
-/*   Updated: 2025/10/15 16:53:52 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/17 14:57:54 by garivoir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*------------------------------*/
-/* New "env"					*/
-/* list creation file			*/
-/*------------------------------*/
 
 #include "shell.h"
 #include "sh_env.h"
 
-/*------------------------------*/
-/* Free "env" list				*/
-/*------------------------------*/
 void	env_clear_list(struct s_env **env)
 {
 	struct s_env	*temp;
@@ -37,10 +29,6 @@ void	env_clear_list(struct s_env **env)
 	return ;
 }
 
-/*------------------------------*/
-/* Create a new "env"			*/
-/* variable with a chained list	*/
-/*------------------------------*/
 int	env_create_list(struct s_shell *sh, char **env_old)
 {
 	int		i;

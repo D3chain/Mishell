@@ -3,26 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   env_new.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 13:41:46 by garivoir          #+#    #+#             */
-/*   Updated: 2025/10/15 16:51:41 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/17 15:16:39 by garivoir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*------------------------------*/
-/* New "env"					*/
-/* struct creation file			*/
-/*------------------------------*/
 
 #include "shell.h"
 #include "sh_env.h"
 
-/*------------------------------*/
-/* Check if there is			*/
-/* an '=' sign on the variable	*/
-/*------------------------------*/
-static int	env_check_var(char *var)
+static int	env_is_var(char *var)
 {
 	int	i;
 	int	check;
@@ -41,12 +32,7 @@ static int	env_check_var(char *var)
 		return (0);
 }
 
-/*------------------------------*/
-/* Put name and value			*/
-/* of each "env" variable		*/
-/* into two separate variables	*/
-/*------------------------------*/
-void	env_var_name_value(struct s_env *env)
+static void	env_var_name_value(struct s_env *env)
 {
 	int	i;
 	int	j;
@@ -69,19 +55,49 @@ void	env_var_name_value(struct s_env *env)
 		j++;
 	}
 	env->val[j] = 0;
-	// env->in_or_out = IN;
+	env->in_out = ENV_IN;
 }
 
-/*------------------------------*/
-/* Create a new					*/
-/* "env" structure				*/
-/*------------------------------*/
+static int	env_before_equal_sign(char *var)
+{
+	int		i;
+	int		size;
+
+	i = 0;
+	size = 0;
+	while (var[i] && var[i] != '=')
+	{
+		i++;
+		size++;
+	}
+	return (size);
+}
+
+static int	env_after_equal_sign(char *var)
+{
+	int	i;
+	int	size;
+
+	i = 0;
+	size = 0;
+	while (var[i] && var[i] != '=')
+		i++;
+	if (var[i] == '=')
+		i++;
+	while (var[i])
+	{
+		i++;
+		size++;
+	}
+	return (size);
+}
+
 int	env_new(char *var, struct s_env **result)
 {
 	int		i;
 	struct s_env	*env;
 
-	if (env_check_var(var) != 0)
+	if (env_is_var(var) != 0)
 		return (1);
 	env = malloc(sizeof(struct s_env));
 	if (!env)
