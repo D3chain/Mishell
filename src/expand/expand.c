@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 11:30:59 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/17 17:25:28 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/18 17:15:41 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,18 +79,18 @@ static int	split_arg_cmd(struct s_cmd *cmd)
 
 static int	expand_wild_card_cmd(struct s_cmd *cmd)
 {
-	struct s_vec	argv;
-	int	i;
-
+	struct s_vec	arg_vec;
+	int				i;
+	
 	if (cmd->argv)
 	{
-		vec_init(&argv, sizeof(char *));
+		vec_init(&arg_vec, sizeof(char *));
 		i = -1;
 		while (cmd->argv[++i])
-			if (expand_wc(&cmd->argv[i], &argv) != 0)
-				return (vec_free(&argv, arg_free), 1);
+			if (expand_wc_arg(&arg_vec, cmd->argv[i]) != 0)
+				return (vec_free(&arg_vec, arg_free), 1);
 		free(cmd->argv);
-		cmd->argv = argv.data;
+		cmd->argv = arg_vec.data;
 	}
 	if (cmd->redv)
 	{
@@ -98,7 +98,7 @@ static int	expand_wild_card_cmd(struct s_cmd *cmd)
 		while (cmd->redv[++i].arg)
 			if (cmd->redv[i].type != R_HDOC
 				&& is_expandable(cmd->redv[i].arg, 0, 0)
-				&& expand_wc(&cmd->redv[i].arg, NULL) != 0)
+				&& expand_wc_red(&cmd->redv[i].arg) != 0)
 				return (1);
 	}
 	return (0);
