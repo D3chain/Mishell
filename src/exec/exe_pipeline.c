@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 11:28:47 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/17 16:51:53 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/19 13:47:01 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ static int	redir_pipe(int prev_read, int *pipe_fd, int i, int n)
 	if (i > 0)
 	{
 		if (dup2(prev_read, STDIN_FILENO) == -1)
-			return (close(prev_read), 1);
+			return (close_set(&prev_read), 1);
 	}
 	if (prev_read != -1)
-		close(prev_read);
+		close_set(&prev_read);
 	if (i < n - 1)
 	{
 		if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
-			return (close(pipe_fd[1]), 1);
-		(close(pipe_fd[0]), close(pipe_fd[1]));
+			return (close_set(&pipe_fd[1]), 1);
+		(close_set(&pipe_fd[0]), close_set(&pipe_fd[1]));
 	}
 	return (0);
 }
@@ -70,10 +70,10 @@ static int	run_simple_pipe(struct s_shell *sh, struct s_node *node)
 static void	end_loop(int i, int *prev_read, int pipe_fd[2], int n)
 {
 	if (*prev_read != -1)
-		close(*prev_read);
+		close_set(&*prev_read);
 	if (i < n -1)
 	{
-		close(pipe_fd[1]);
+		close_set(&pipe_fd[1]);
 		*prev_read = pipe_fd[0];
 	}
 }

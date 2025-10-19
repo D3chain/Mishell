@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 16:59:01 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/17 12:12:16 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/19 13:46:43 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@ static int	std_keep_fds(int std_fds[2])
 		return (1);
 	std_fds[1] = dup(STDOUT_FILENO);
 	if (std_fds[1] == -1)
-		return (close(std_fds[0]), 1);
+		return (close_set(&std_fds[0]), 1);
 	return (0);
 }
 
 static int	std_reset_fds(int std_fds[2])
 {
 	if (dup2(STDIN_FILENO, std_fds[0]) != 0)
-		return (close(std_fds[0]), close(std_fds[1]), 1);
+		return (close_set(&std_fds[0]), close_set(&std_fds[1]), 1);
 	if (dup2(STDOUT_FILENO, std_fds[1]) != 0)
-		return (close(std_fds[0]), close(std_fds[1]), 1);
-	(close(std_fds[0]), close(std_fds[1]));
+		return (close_set(&std_fds[0]), close_set(&std_fds[1]), 1);
+	(close_set(&std_fds[0]), close_set(&std_fds[1]));
 	return (0);
 }
 
@@ -57,7 +57,7 @@ int	exec_builtin(struct s_shell *sh, int std_fds[2], char **argv)
 	if (ft_strcmp(argv[0], "exit") == 0)
 	{
 		if (std_fds)
-			(close(std_fds[0]), close(std_fds[1]));
+			(close_set(&std_fds[0]), close_set(&std_fds[1]));
 		return (sh_exit(sh, argv));
 	}
 	st = bi_fn[is_builtin(argv[0])](sh, argv);

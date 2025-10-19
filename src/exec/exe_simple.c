@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 11:29:18 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/19 12:25:49 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/19 14:20:01 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	exe_run_simple(struct s_shell *sh, struct s_cmd *cmd)
 	int	st;
 	int	pid;
 
-	print_cmd(sh, cmd, 0);
 	if (expand_command(sh, cmd) != 0)
 		return (2);
 	if (cmd->argv && is_builtin(cmd->argv[0]))

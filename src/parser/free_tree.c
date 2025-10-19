@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 10:08:41 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/16 11:51:29 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/19 13:47:32 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,12 @@ void	free_simple(struct s_node *simple)
 	{
 		i = -1;
 		while (simple->u.s_simple.redv[++i].arg)
+		{
 			free(simple->u.s_simple.redv[i].arg);
+			if (simple->u.s_simple.redv[i].type == R_HDOC
+				&& simple->u.s_simple.redv[i].fd[0] != -1)
+				close_set(&simple->u.s_simple.redv[i].fd[0]);	
+		}
 		free(simple->u.s_simple.redv);
 		simple->u.s_simple.redv = NULL;
 	}

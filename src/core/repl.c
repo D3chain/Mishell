@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 09:25:21 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/16 11:54:56 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/19 13:23:59 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ static int	sh_process_line(struct s_shell *sh, char *line)
 	if (par_build(toks, &ast) != 0)
 		return (toks_free(toks), 2);
 	toks_free(toks);
+	sh->root = ast;
 	if (rd_hdoc_process_all(sh, ast) != 0)
 		return (sh_cleanup(sh), sh->last_status);
-	sh->root = ast;
 	st = sh_run_node(sh, ast);
 	free_node(sh->root);
 	sh->root = NULL;
