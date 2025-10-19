@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 16:52:49 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/16 15:56:29 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/19 12:30:30 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	redir_apply(struct s_redir *redv)
 			st = redir_in(redv, redv[i].type);
 		if (redv[i].type == R_OUT || redv[i].type == R_APP)
 			st = redir_out(redv, redv[i].type);
+		printf("caca\n");
 		if (st != 0)
 			return (close_hd_from(redv, i), st);
 	}

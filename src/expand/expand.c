@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 11:30:59 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/18 17:15:41 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/19 12:12:21 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	split_arg_cmd(struct s_cmd *cmd)
 			if (split_arg(&arg_vec, cmd->argv[i], 0, 0) != 0)
 				return (vec_free(&arg_vec, arg_free), 1);
 		free_tab_str(cmd->argv);
-		cmd->argv = (char **)arg_vec.data;
+		cmd->argv = arg_vec.data;
 	}
 	if (cmd->redv)
 	{
@@ -89,7 +89,7 @@ static int	expand_wild_card_cmd(struct s_cmd *cmd)
 		while (cmd->argv[++i])
 			if (expand_wc_arg(&arg_vec, cmd->argv[i]) != 0)
 				return (vec_free(&arg_vec, arg_free), 1);
-		free(cmd->argv);
+		free_tab_str(cmd->argv);
 		cmd->argv = arg_vec.data;
 	}
 	if (cmd->redv)
@@ -106,7 +106,6 @@ static int	expand_wild_card_cmd(struct s_cmd *cmd)
 
 int	expand_command(struct s_shell *sh, struct s_cmd *cmd)
 {
-	(void)sh;
 	if (expand_variables_cmd(sh, cmd) != 0)
 		return (1);
 	if (split_arg_cmd(cmd) != 0)
