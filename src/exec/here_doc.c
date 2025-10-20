@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 18:56:49 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/17 16:58:51 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/19 13:47:10 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	capture_line_loop(struct s_shell *sh,
 		line = readline("> ");
 		if (g_sigstate == SIGINT || !line || ft_strcmp(redir->arg, line) == 0)
 		{
-			(close(redir->fd[0]), close(redir->fd[1]), sh_cleanup(sh));
+			(close_set(&redir->fd[0]), close_set(&redir->fd[1]), sh_cleanup(sh));
 			if (!line && g_sigstate != SIGINT)
 				err_msg(2, "warning", "here-document delimited by end-of-file");
 			if (line)
@@ -36,7 +36,7 @@ static int	capture_line_loop(struct s_shell *sh,
 		}
 		if (!q_del && expand_var(sh, &line, 2) != 0)
 		{
-			(close(redir->fd[0]), close(redir->fd[1]), free(line));
+			(close_set(&redir->fd[0]), close_set(&redir->fd[1]), free(line));
 			(sh_cleanup(sh), exit(2));
 		}
 		write(redir->fd[1], line, ft_strlen(line));
@@ -64,7 +64,7 @@ static int	here_doc_capture(struct s_shell *sh,
 		q_del = exp_unquote_str(redir->arg, 0, 0);
 		capture_line_loop(sh, redir, q_del);
 	}
-	close(redir->fd[1]);
+	close_set(&redir->fd[1]);
 	waitpid(pid, &st, 0);
 	if (WIFEXITED(st))
 		return (WEXITSTATUS(st));
@@ -82,16 +82,19 @@ static int	hdoc_process_command(struct s_shell *sh,
 	st = 0;
 	i = -1;
 	if (cmd->redv)
-	while (cmd->redv[++i].arg)
 	{
-		if (cmd->redv->type == R_HDOC)
-			st = here_doc_capture(sh, &cmd->redv[i]);
-		if (st)
+		while (cmd->redv[++i].arg)
 		{
-			sh->last_status = st;
-			if (st == 1)
-				err_per(1, "here document");
-			return (1);
+			if (cmd->redv[i].type == R_HDOC)
+				st = here_doc_capture(sh, &cmd->redv[i]);
+			if (st)
+			{
+				close_set(&cmd->redv[i].fd[0]);
+				sh->last_status = st;
+				if (st == 1)
+					err_per(1, "here document");
+				return (1);
+			}
 		}
 	}
 	return (0);

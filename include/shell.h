@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:11:37 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/17 16:51:04 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/19 12:26:36 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,7 @@ void	sh_install_signal_mode(int mode);
 void	child_install_signal(int mode);
 void	sh_ignore_signal(void);
 void	sh_cleanup(struct s_shell *sh);
+
+void print_cmd(struct s_shell *sh, struct s_cmd *c, int depth);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 09:28:07 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/17 14:33:03 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/19 12:06:35 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ int	split_arg(struct s_vec *arg_vec, char *arg, int sq, int dq)
 		{
 			splited = ft_substr(arg, 0, i);
 			if (!splited || vec_push(arg_vec, &splited) != 0)
-				return (1);
+				return (err_per(1, "expand"));
 			return (split_arg(arg_vec, arg + i, 0, 0));
 		}
 	}
 	splited = ft_substr(arg, 0, i);
 	if (!splited || vec_push(arg_vec, &splited) != 0)
-		return (1);
+		return (err_per(1, "expand"));
 	return (0);
 }

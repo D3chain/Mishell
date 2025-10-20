@@ -1,4 +1,4 @@
-build/builtins/unset.o: src/builtins/unset.c include/shell.h \
+build/util/close_set.o: src/util/close_set.c include/shell.h \
   include/sh_env.h include/sh_lex.h include/vec.h include/util.h \
   include/sh_par.h include/sh_err.h libft/libft.h
 

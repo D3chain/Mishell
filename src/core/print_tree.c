@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 14:05:43 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/14 09:15:40 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/19 12:27:22 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "sh_par.h"
 #include "sh_exp.h"
 
-typedef struct s_shell t_shell;
+struct s_shell;
 
 static const char *kind_str(int k)
 {
@@ -46,7 +46,7 @@ static void print_indent(int depth)
 	while (depth-- > 0) printf("  ");
 }
 
-void print_cmd(t_shell *sh, struct s_cmd *c, int depth)
+void print_cmd(struct s_shell *sh, struct s_cmd *c, int depth)
 {
 	char **av = c->argv;
 	struct s_redir *r = c->redv;
@@ -66,7 +66,7 @@ void print_cmd(t_shell *sh, struct s_cmd *c, int depth)
 	}
 }
 
-static void print_node(t_shell *sh, struct s_node *n, int depth)
+static void print_node(struct s_shell *sh, struct s_node *n, int depth)
 {
 	if (!n) { print_indent(depth); printf("(null)\n"); return; }
 	print_indent(depth); printf("%s", kind_str(n->kind));
@@ -91,7 +91,7 @@ static void print_node(t_shell *sh, struct s_node *n, int depth)
 }
 
 /* Appelle ceci pour imprimer l’AST complet */
-void ast_print(t_shell *sh, struct s_node *root)
+void ast_print(struct s_shell *sh, struct s_node *root)
 {
 	print_node(sh, root, 0);
 }

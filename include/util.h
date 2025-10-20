@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 15:33:37 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/17 09:39:46 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/19 13:42:53 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,7 @@ void	free_tab_str(char **tab);
 
 int		wstatus(int st);
 int		exit_code_errno(int err);
+
+void	close_set(int *fd);
 
 #endif
