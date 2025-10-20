@@ -6,11 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 18:43:26 by echatela          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/10/15 17:33:59 by echatela         ###   ########.fr       */
-=======
-/*   Updated: 2025/10/20 09:59:28 by echatela         ###   ########.fr       */
->>>>>>> 083d82a (correc leak syn err)
+/*   Updated: 2025/10/20 11:33:05 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +54,13 @@ static struct s_node	*par_and_or(struct s_tok *toks, int *i, int *st)
 		tmp = new;
 		new = malloc(sizeof(*new));
 		if (!new)
-			return (free(tmp), NULL);
+			return (free_node(tmp), NULL);
 		new->kind = N_ANDOR;
 		new->u.s_andor.op = toks[*i].type - 2;
 		new->u.s_andor.lhs = tmp;
 		new->u.s_andor.rhs = (++(*i), par_pipe(toks, i, st));
 		if (!new->u.s_andor.rhs)
-			return (free(new->u.s_andor.lhs), free(new), NULL);
+			return (free_node(new->u.s_andor.lhs), free(new), NULL);
 	}
 	return (new);
 }

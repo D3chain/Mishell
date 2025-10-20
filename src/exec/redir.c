@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 12:36:20 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/19 14:07:52 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/20 11:31:52 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,9 @@ static int	open_out(int type, char *file, int *p_fd_out)
 		flags = O_WRONLY | O_CREAT | O_TRUNC;
 	if (type == R_APP)
 		flags = O_WRONLY | O_CREAT | O_APPEND;
-	if (access(file, F_OK) == 0 && access(file, W_OK) != 0)
-		return (err_msg(1, file, "Permission denied"));
 	*p_fd_out = open(file, flags, 0644);
 	if (*p_fd_out == -1)
-		return (err_per(2, "redir"));
+		return (err_per(1, file));
 	return (0);
 }
 
@@ -44,13 +42,9 @@ static int	open_in(int type, char *file, int red_fd[2], int *p_fd_in)
 		close_set(p_fd_in);
 	if (type == R_IN)
 	{
-		if (access(file, F_OK) != 0)
-			return (err_msg(1, file, "No such file or directory"));
-		if (access(file, R_OK) != 0)
-			return (err_msg(1, file, "Permission denied"));
 		*p_fd_in = open(file, O_RDONLY);
 		if (*p_fd_in == -1)
-			return (err_per(2, "redir"));
+			return (err_per(1, file));
 	}
 	if (type == R_HDOC)
 		*p_fd_in = red_fd[0];
