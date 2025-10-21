@@ -1,35 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/05 14:01:40 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/21 13:19:22 by garivoir         ###   ########.fr       */
+/*   Created: 2025/10/21 11:42:11 by garivoir          #+#    #+#             */
+/*   Updated: 2025/10/21 11:43:45 by garivoir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
-#include "sh_env.h"
+#include "libft.h"
 
-int	sh_env(struct s_shell *sh, char **argv)
+long	ft_atol(const char *str)
 {
-	struct s_env	*tmp_env;
+	long int	result;
+	int			sign;
 
-	if (argv[1])
+	sign = 1;
+	result = 0;
+	while ((*str >= 9 && *str <= 13) || *str == ' ')
 	{
-		write(2, "bash: env: ", 11);
-		write(2, argv[1], ft_strlen(argv[1]));
-		write(2, ": No such file or directory\n", 28);
-		return (127);
+		str++;
 	}
-	tmp_env = sh->env;
-	while (tmp_env)
+	if (*str == '+' || *str == '-')
 	{
-		if (tmp_env->in_out == ENV_IN && tmp_env->var)
-			printf("%s\n", tmp_env->var);
-		tmp_env = tmp_env->next;
+		if (*str == '-')
+			sign *= -1;
+		str++;
 	}
-	return (0);
+	while (*str >= '0' && *str <= '9')
+	{
+		result = result * 10 + (*str - '0');
+		str++;
+	}
+	return (result * sign);
 }

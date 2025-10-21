@@ -6,20 +6,38 @@
 /*   By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:01:47 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/17 16:06:07 by garivoir         ###   ########.fr       */
+/*   Updated: 2025/10/21 13:19:56 by garivoir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "sh_env.h"
 
-//TODO: malloc buf (on peut compter la longueur de pwd
-//grace a la variable PWD)
 int	sh_pwd(struct s_shell *sh, char **argv)
 {
-	char	buf[4096];
-	
+	char	*cwd;
+
 	(void)sh;
-	(void)argv;
-	printf("%s\n", getcwd(buf, 4096));
-	return (0);
+	if (argv[1])
+	{
+		if (argv[1][0])
+		{
+			if (argv[1][0] == '-')
+			{
+				write(2, "bash: pwd: ", 11);
+				write(2, argv[1], ft_strlen(argv[1]));
+				write(2, ": invalid option\npwd: usage: pwd [-LP]\n", 39);
+				return (1);
+			}
+		}
+	}
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+	{
+		write(2, "bash: pwd: error retrieving current directory: ", 47);
+		write(2, "getcwd: cannot access parent directories: ", 42);
+		write(2, "No such file or directory\n", 26);
+		return (1);
+	}
+	return (printf("%s\n", cwd), free(cwd), 0);
 }

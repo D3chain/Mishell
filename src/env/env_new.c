@@ -6,7 +6,7 @@
 /*   By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 13:41:46 by garivoir          #+#    #+#             */
-/*   Updated: 2025/10/17 15:16:39 by garivoir         ###   ########.fr       */
+/*   Updated: 2025/10/20 14:40:45 by garivoir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	env_is_var(char *var)
 		return (0);
 }
 
-static void	env_var_name_value(struct s_env *env)
+static void	env_key_val(struct s_env *env)
 {
 	int	i;
 	int	j;
@@ -115,7 +115,7 @@ int	env_new(char *var, struct s_env **result)
 	env->val = malloc(env_after_equal_sign(var) + 1);
 	if (!env->val)
 		return (env_free(&env), 1);
-	env_var_name_value(env);
+	env_key_val(env);
 	env->next = NULL;
 	*result = env;
 	return (0);

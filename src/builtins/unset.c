@@ -6,7 +6,7 @@
 /*   By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:01:50 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/17 15:22:14 by garivoir         ###   ########.fr       */
+/*   Updated: 2025/10/21 13:20:07 by garivoir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 /*------------------------------*/
 
 #include "shell.h"
+#include "sh_env.h"
 
 /*------------------------------*/
 /* Delete variable				*/
@@ -64,7 +65,7 @@
 // int	ms_unset(char **cmd, struct s_env *envp, int last_st)
 // {
 // 	int	i;
-	
+
 // 	if (!cmd || !cmd[0])
 // 		return (-1);	//error
 // 	if (ft_strcmp(cmd[0], "unset") != 0)

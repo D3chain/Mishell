@@ -6,40 +6,38 @@
 /*   By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:01:38 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/17 15:53:38 by garivoir         ###   ########.fr       */
+/*   Updated: 2025/10/20 20:03:27 by garivoir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-static int	sh_cd_home(struct s_shell *sh)
-{
-	struct s_env	*tmp;
-	
-	tmp = sh->env;
-	while (sh->env)
-	{
-		if (ft_strcmp(sh->env->key, "HOME") == 0)
-		{
-			while (tmp)
-			{
-				if (ft_strcmp(tmp->key, "OLDPWD") == 0)
-				{
-					env_change_val(&sh->env);
-					break ;
-				}
-			}
-			return (chdir(sh->env->val));
-		}
-		sh->env = sh->env->next;
-	}
-	write(2, "bash: cd: HOME not set\n", 23);
-	return (1);
-}
+#include "sh_env.h"
 
 int	sh_cd(struct s_shell *sh, char **argv)
 {
+	char	*cwd;
+	char	*path;
+
 	if (!argv[1])
-		return (sh_cd_home(sh));
+	{
+		path = env_get_val(sh->env, "HOME");
+		if (!path)
+			return (write(2, "bash: cd: HOME not set\n", 23), 1);
+	}
+	else
+		path = argv[1];
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+		return (perror(""), 1);
+	if (chdir(path) == -1)
+	{
+		write(2, "bash: cd: ", 11);
+		write(2, path, ft_strlen(path));
+		write(2, ": ", 2);
+		perror("");
+		return (1);
+	}
+	(env_change_var(sh, "PWD", path), env_change_var(sh, "OLDPWD", cwd));
+	free(cwd);
 	return (0);
 }

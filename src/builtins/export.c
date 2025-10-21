@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:01:44 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/16 16:48:49 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/21 13:19:46 by garivoir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 /*------------------------------*/
 
 #include "shell.h"
+#include "sh_env.h"
 
 // rajouter une fonction qui permet d'ajouter a l'env meme les variables
 // sans valeur, et rajouter a la struct t_env si la variable doit ou non
@@ -81,7 +82,7 @@
 // {
 // 	int	i;
 // 	struct s_env	*result;
-	
+
 // 	if (!cmd || !cmd[0])
 // 		return (-1);	//error
 // 	if (ft_strcmp(cmd[0], "export") != 0)
