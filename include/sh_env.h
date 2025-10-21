@@ -6,7 +6,7 @@
 /*   By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 14:44:07 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/20 19:43:49 by garivoir         ###   ########.fr       */
+/*   Updated: 2025/10/21 15:42:33 by garivoir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ struct s_env
 	struct s_env	*next;
 };
 
+int		env_size(struct s_env *env);
 void	env_free(struct s_env **env);
 void	env_clear_list(struct s_env **env);
 char	**env_create_tab(struct s_env *env);

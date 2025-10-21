@@ -6,7 +6,7 @@
 #    By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/25 09:10:51 by echatela          #+#    #+#              #
-#    Updated: 2025/10/21 11:44:17 by garivoir         ###   ########.fr        #
+#    Updated: 2025/10/21 16:38:59 by garivoir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRCS = 	ft_isalpha.c \
 		ft_atol.c \
 		ft_calloc.c \
 		ft_strdup.c \
+		ft_strndup.c \
 		ft_substr.c \
 		ft_strjoin.c \
 		ft_strtrim.c \

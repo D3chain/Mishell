@@ -6,109 +6,89 @@
 /*   By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:01:44 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/21 13:19:46 by garivoir         ###   ########.fr       */
+/*   Updated: 2025/10/21 17:00:54 by garivoir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*------------------------------*/
-/* export built-in				*/
-/*------------------------------*/
 
 #include "shell.h"
 #include "sh_env.h"
 
-// rajouter une fonction qui permet d'ajouter a l'env meme les variables
-// sans valeur, et rajouter a la struct t_env si la variable doit ou non
-// etre affichee dans l'environnement
+static int	sh_export_equal_sign(char *var)
+{
+	int	i;
 
-// puis rajouter aussi une fonction qui permet d'append une variable (var+=a)
+	i = 0;
+	while (var[i])
+	{
+		if (var[i] == '=')
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
-/*------------------------------*/
-/* Print "envp" variable		*/
-/*------------------------------*/
-// static void	ms_export_print_env(struct s_env *env)
-// {
-// 	while (env->next)
-// 	{
-// 		printf("declare -x %s=\"%s\"\n", env->key, env->val);
-// 		env = env->next;
-// 	}
-// }
+static int	sh_export_add(struct s_shell *sh, char *var, char*key, char *val)
+{
+	struct s_env	*env;
+	struct s_env	*new;
+	int				equal_sign;
 
-/*------------------------------*/
-/* Make bubble sort by			*/
-/* alphabatcical order for		*/
-/* "env", then print variable	*/
-/*------------------------------*/
-// static void	ms_export_bubble_sort(struct s_env *env)
-// {
-// 	struct s_env	*temp;
+	env = sh->env;
+	equal_sign = !sh_export_equal_sign(var);
+	while (env)
+	{
+		if (ft_strcmp(env->key, key) == 0)
+		{
+			if (equal_sign)
+			{
+				(free(env->val), free(env->var));
+				env->val = val;
+				env->var = ft_strjoin(key, val); // pas les bonnes valeurs
+				// en plein milieu de ca, peut-etre faire une
+				// autre fonction sh_export_update pour ce cas-la,
+				// ne pas oublier de ger l'append ("+=")
+			}
+		}
+	}
+}
 
-// 	while (env && env->next)
-// 	{
-// 		if (ft_strcmp(env->key, env->next->key) > 0)
-// 		{
-// 			env->next->next = env->next;
-// 		}
-// 		else
-// 			temp = temp->next;
-// 	}
-// 	ms_export_print_env(temp);
-// }
+static int	sh_export_var(struct s_shell *sh, char *var)
+{
+	char			*key;
+	char			*val;
+	int				equal_sign;
 
-/*------------------------------*/
-/* Sort "env" chained list		*/
-/* by alphabetical order, and	*/
-/* display variables on screen	*/
-/*------------------------------*/
-// static int	ms_export_alphabetical(struct s_env *env)
-// {
-// 	if (!env || !env->var)
-// 		return (-1);	//error
-// 	if (!env->next)
-// 	{
-// 		ms_export_print_env(env);
-// 		return (0);
-// 	}
-// 	ms_export_bubble_sort(env);
-// 	return (0);
-// }
-
-/*------------------------------*/
-/* minishell export				*/
-/* built-in main function		*/
-/*------------------------------*/
-// int	ms_export(char **cmd, struct s_env *env, int last_st)
-// {
-// 	int	i;
-// 	struct s_env	*result;
-
-// 	if (!cmd || !cmd[0])
-// 		return (-1);	//error
-// 	if (ft_strcmp(cmd[0], "export") != 0)
-// 		return (-1);	//error
-// 	if (env == NULL)
-// 		return (-1);	//error
-// 	if (!cmd[1])
-// 		return(ms_export_alphabetical(env));
-// 	while (env->next)
-// 		env = env->next;
-// 	i = 1;
-// 	while (cmd[i])
-// 	{
-// 		env_new(cmd[i], sh, &result);
-// 		if (!result)
-// 			return (-1);	//error
-// 		env->next = result;
-// 		env->next->next = NULL;
-// 		i++;
-// 	}
-// 	return (0);
-// }
+	equal_sign = !sh_export_equal_sign(var);
+	if (equal_sign)
+	{
+		key = ft_strndup(var, ft_strchr(var, '=') -  var);
+		if (!key)
+			return (2);
+		val = ft_strdup(ft_strchr(var, '+') + 1);
+		if (!val)
+			return (free(key), 2);
+	}
+	else
+	{
+		key = ft_strdup(var);
+		if (!key)
+			return (2);
+		val = NULL;
+	}
+	return (sh_export_add(sh, var, key, val));
+}
 
 int	sh_export(struct s_shell *sh, char **argv)
 {
-	(void)sh;
-	(void)argv;
-	return (0);
+	int				i;
+	int				status;
+
+	if (!argv[1])
+		return(sh_export_no_arg(sh));
+	i = 0;
+	status = 0;
+	while (argv[++i])
+		if (!sh_export_scan_arg(argv[i], &status))
+			status = sh_export_var(sh, argv);
+	return (status);
 }

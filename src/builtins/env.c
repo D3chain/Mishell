@@ -6,7 +6,7 @@
 /*   By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:01:40 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/21 13:19:22 by garivoir         ###   ########.fr       */
+/*   Updated: 2025/10/21 15:35:53 by garivoir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	sh_env(struct s_shell *sh, char **argv)
 
 	if (argv[1])
 	{
-		write(2, "bash: env: ", 11);
+		write(2, "minishell: env: ", 16);
 		write(2, argv[1], ft_strlen(argv[1]));
 		write(2, ": No such file or directory\n", 28);
 		return (127);

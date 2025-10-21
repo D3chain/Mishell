@@ -6,7 +6,7 @@
 /*   By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 12:13:53 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/20 19:43:41 by garivoir         ###   ########.fr       */
+/*   Updated: 2025/10/21 15:42:16 by garivoir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,21 @@ void	env_free(struct s_env **env)
 	free(*env);
 	*env = NULL;
 	return ;
+}
+
+int	env_size(struct s_env *env)
+{
+	int				i;
+	struct s_env	*tmp_env;
+	
+	i = 0;
+	tmp_env = env;
+	while (tmp_env)
+	{
+		i++;
+		tmp_env = tmp_env->next;
+	}
+	return (i);
 }
 
 char	*env_get_val(struct s_env *env, char *key)
@@ -68,7 +83,6 @@ int	env_change_var(struct s_shell *sh, char *key, char *new_val)
 	}
 	return (1);
 }
-
 
 char	**env_create_tab(struct s_env *env)
 {
