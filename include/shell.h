@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:11:37 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/16 14:38:46 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/23 16:28:28 by garivoir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include <errno.h>
 # include <unistd.h>
 
-extern volatile sig_atomic_t g_sigstate;
+extern volatile sig_atomic_t	g_sigstate;
 
 struct s_shell
 {

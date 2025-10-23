@@ -6,7 +6,7 @@
 #    By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/05 12:02:13 by echatela          #+#    #+#              #
-#    Updated: 2025/10/21 15:42:41 by garivoir         ###   ########.fr        #
+#    Updated: 2025/10/23 16:51:21 by garivoir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ CORE_SRCS		:=	repl.c signals.c print_tree.c
 LEXER_SRCS		:=	lexer.c tok.c
 PARSER_SRCS		:=	parser.c par_cmd.c free_tree.c
 EXPAND_SRCS		:=	expand.c exp_var.c exp_wc.c exp_unquote.c
-BUILTINS_SRCS	:=	pwd.c cd.c echo.c env.c exit.c export.c unset.c
+BUILTINS_SRCS	:=	pwd.c cd.c echo.c env.c exit.c export.c export_utils.c export_no_arg.c export_scan_arg.c unset.c
 EXEC_SRCS		:=	exe_run.c exe_pipeline.c exe_simple.c exec_command.c redir.c here_doc.c exe_path.c exe_builtin.c
 ENV_SRCS		:=	env_create_list.c env_utils.c env_new.c
 ERR_SRCS		:=	error.c fill.c

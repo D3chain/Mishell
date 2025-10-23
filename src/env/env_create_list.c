@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_make_list.c                                    :+:      :+:    :+:   */
+/*   env_create_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:32:55 by garivoir          #+#    #+#             */
-/*   Updated: 2025/10/21 15:42:00 by garivoir         ###   ########.fr       */
+/*   Updated: 2025/10/23 15:58:10 by garivoir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	env_clear_list(struct s_env **env)
 
 int	env_create_list(struct s_shell *sh, char **env_old)
 {
-	int		i;
+	int				i;
 	struct s_env	*env;
 	struct s_env	*env_temp;
 
@@ -41,7 +41,7 @@ int	env_create_list(struct s_shell *sh, char **env_old)
 		return (1);
 	if (!env)
 		return (1);
-	i = 0;
+	i = 1;
 	env_temp = env;
 	while (env_old[i])
 	{

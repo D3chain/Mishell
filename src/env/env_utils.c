@@ -6,7 +6,7 @@
 /*   By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 12:13:53 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/21 15:42:16 by garivoir         ###   ########.fr       */
+/*   Updated: 2025/10/23 16:25:55 by garivoir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	env_size(struct s_env *env)
 {
 	int				i;
 	struct s_env	*tmp_env;
-	
+
 	i = 0;
 	tmp_env = env;
 	while (tmp_env)
@@ -46,7 +46,7 @@ int	env_size(struct s_env *env)
 char	*env_get_val(struct s_env *env, char *key)
 {
 	struct s_env	*tmp_env;
-	
+
 	tmp_env = env;
 	while (env)
 	{
@@ -60,8 +60,9 @@ char	*env_get_val(struct s_env *env, char *key)
 int	env_change_var(struct s_shell *sh, char *key, char *new_val)
 {
 	char			*buf;
-	struct s_env	*env = sh->env;
+	struct s_env	*env;
 
+	env = sh->env;
 	while (env)
 	{
 		if (ft_strcmp(env->key, key) == 0)
@@ -93,13 +94,19 @@ char	**env_create_tab(struct s_env *env)
 	i = 0;
 	cur = env;
 	while (cur)
-		(cur = cur->next, i++);
+	{
+		cur = cur->next;
+		i++;
+	}
 	env_tab = malloc(sizeof(char *) * (i + 1));
 	if (!env_tab)
 		return (NULL);
 	i = 0;
 	while (env)
-		(env_tab[i++] = env->var, env = env->next);
+	{
+		env_tab[i++] = env->var;
+		env = env->next;
+	}
 	env_tab[i] = NULL;
 	return (env_tab);
 }

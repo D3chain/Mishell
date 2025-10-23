@@ -6,7 +6,7 @@
 /*   By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 14:44:07 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/21 15:42:33 by garivoir         ###   ########.fr       */
+/*   Updated: 2025/10/23 16:27:30 by garivoir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "shell.h"
 
-struct s_shell;
+struct	s_shell;
 
 enum { ENV_IN, ENV_OUT
 };

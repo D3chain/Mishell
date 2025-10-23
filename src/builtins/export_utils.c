@@ -5,83 +5,64 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/21 16:43:37 by garivoir          #+#    #+#             */
-/*   Updated: 2025/10/21 16:44:00 by garivoir         ###   ########.fr       */
+/*   Created: 2025/10/23 16:35:33 by garivoir          #+#    #+#             */
+/*   Updated: 2025/10/23 16:36:05 by garivoir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "sh_bui.h"
 #include "sh_env.h"
 
-static void	sh_export_no_arg_print(struct s_env **tab)
+char	*sh_export_key(char *argv)
 {
-	int	i;
+	int		i;
+	char	*key;
 
 	i = 0;
-	while (tab[i])
-	{
-		printf("export %s", tab[i]->key);
-		if (tab[i]->val)
-			printf("=\"%s\"", tab[i]->val);
-		printf("\n");
+	while (argv[i] && argv[i] != '='
+		&& !(argv[i] == '+' && argv[i + 1] == '='))
 		i++;
-	}
-	return ;
+	key = ft_strndup(argv, i);
+	if (!key)
+		return (NULL);
+	return (key);
 }
 
-static int	sh_export_no_arg(struct s_shell *sh)
+struct s_env	*sh_export_env_key(struct s_shell *sh, char *key)
 {
-	int				i;
-	int				j;
 	struct s_env	*env;
-	struct s_env	*tmp;
-	struct s_env	**tab;
-	
-	if (!env_size(sh->env))
-		return (0);
-	tab = malloc(sizeof(struct s_env *) * (env_size(sh->env) + 1));
-	if (!tab)
-		return (2);
-	i = 0;
+
 	env = sh->env;
 	while (env)
-		(tab[i++] = env, env = env->next);
-	tab[i] = NULL;
-	i = -1;
-	while (++i < env_size(sh->env) - 1)
 	{
-		j = -1;
-		while (++j < env_size(sh->env) - i - 1)
-			if (ft_strcmp(tab[j]->key, tab[j + 1]->key) > 0)
-				(tmp = tab[j], tab[j] = tab[j + 1], tab[j + 1] = tmp);
+		if (ft_strcmp(env->key, key) == 0)
+			return (env);
+		env = env->next;
 	}
-	return (sh_export_no_arg_print(tab), free(tab), 0);
+	return (NULL);
 }
 
-static int	sh_export_scan_arg(char *argv, int *status)
+int	sh_export_new_var(struct s_env *env)
 {
-	int	i;
+	char	*tmp_var;
 
-	i = 0;
-	if (!ft_isalpha(argv[i]) && argv[i] != '_')
+	if (!env->val)
 	{
-		write(2, "minishell: export: '", 20);
-		write(2, argv, ft_strlen(argv));
-		write(2, "': not a valid identifier\n", 26);
-		*status = 1;
-		return (1);
+		free(env->var);
+		env->var = ft_strjoin(env->key, "=");
+		if (!env->var)
+			return (2);
+		return (env->in_out = ENV_IN, 0);
 	}
-	while (argv[i])
-	{
-		if (!ft_isalnum(argv[i]) && argv[i] != '_' && argv[i] != '=')
-		{
-			write(2, "minishell: export: '", 20);
-			write(2, argv, ft_strlen(argv));
-			write(2, "': not a valid identifier\n", 26);
-			*status = 1;
-			return (1);
-		}
-		i++;
-	}
+	tmp_var = ft_strjoin(env->key, "=");
+	if (!tmp_var)
+		return (2);
+	free(env->var);
+	env->var = ft_strjoin(tmp_var, env->val);
+	if (!env->var)
+		return (free(tmp_var), 2);
+	free(tmp_var);
+	env->in_out = ENV_IN;
 	return (0);
 }
