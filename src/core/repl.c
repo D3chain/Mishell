@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 09:25:21 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/19 13:23:59 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/23 15:11:12 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	sh_process_line(struct s_shell *sh, char *line)
 	toks_free(toks);
 	sh->root = ast;
 	if (rd_hdoc_process_all(sh, ast) != 0)
-		return (sh_cleanup(sh), sh->last_status);
+		return (free_node(sh->root), sh->last_status);
 	st = sh_run_node(sh, ast);
 	free_node(sh->root);
 	sh->root = NULL;
@@ -58,6 +58,8 @@ int	sh_repl(struct s_shell *sh)
 		line = sh_read_line();
 		if (!line)
 			return (write(2, "exit\n", 5), 130);
+		if (g_sigstate == SIGINT)
+			sh->last_status = 128 + SIGINT;
 		st = sh_process_line(sh, line);
 		sh->last_status = st;
 	}

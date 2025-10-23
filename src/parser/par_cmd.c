@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 10:00:04 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/13 19:14:51 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:36:41 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ static int	par_redir(struct s_tok *toks, int *i, struct s_vec *redv)
 	redir.arg = ft_strdup(toks[*i].lex);
 	if (!redir.arg)
 		return (1);
+	redir.fd[0] = -1;
+	redir.fd[1] = -1;
 	if (vec_push(redv, &redir) != 0)
 		return (free(redir.arg), 1);
 	++(*i);
