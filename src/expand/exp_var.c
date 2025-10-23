@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 17:43:32 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/17 15:50:58 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/23 11:35:56 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	exp_set_var_str(struct s_shell *sh,
 
 	(*i)++;
 	if (str[*i] == '?')
-		return ((*i)++, exp_status(sh->last_status, sb));
+		return (exp_status(sh->last_status, sb));
 	if (check_quote(str[*i], NULL, NULL))
 		return (0);
 	if (!ft_isalpha(str[*i]) && str[*i] != '_')
@@ -45,10 +45,10 @@ static int	exp_set_var_str(struct s_shell *sh,
 	while (cur)
 	{
 		if (ft_strncmp(&str[*i], cur->key, n) == 0)
-			return (*i += n, sb_puts(sb, cur->val));
+			return (*i += n - 1, sb_puts(sb, cur->val));
 		cur = cur->next;
 	}
-	return (*i += n, 0);
+	return (*i += n - 1, 0);
 }
 
 static char	*expanded_var_str(struct s_shell *sh, char *str, int mode)
@@ -65,9 +65,11 @@ static char	*expanded_var_str(struct s_shell *sh, char *str, int mode)
 	while (str[++i])
 	{
 		check_quote(str[i], &sq, &dq);
-		if (str[i] == '$' && (!sq || mode == 2)
-			&& exp_set_var_str(sh, &sb, str, &i) != 0)
-			return (free(sb.out), NULL);
+		if (str[i] == '$' && (!sq || mode == 2))
+		{
+			if (exp_set_var_str(sh, &sb, str, &i) != 0)
+				return (free(sb.out), NULL);
+		}
 		else if (sb_putc(&sb, str[i]) != 0)
 			return (free(sb.out), NULL);
 		if (!str[i])

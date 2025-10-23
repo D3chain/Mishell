@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 17:14:39 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/18 18:17:49 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/23 11:26:52 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,12 @@ int	expand_arg_in_vec(struct s_vec *tmp_vec, char *arg)
 	}
 	else if (push_match_in_vec(tmp_vec, arg) != 0)
 		return (1);
+	if (tmp_vec->len == 0)
+	{
+		name = ft_strdup(arg);
+		if (!name || vec_push(tmp_vec, &name) != 0)
+			return (free(name), err_per(1, "expand"));
+	}
 	return (0);	
 }
 

@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 18:43:26 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/20 11:33:05 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/23 11:42:48 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ int	par_build(struct s_tok *toks, struct s_node **root)
 	st = 0;
 	*root = par_list(toks, &i, &st);
 	if (st == 1)
-		return (err_per(2, "parser"));
+		return (free_node(*root), err_per(2, "parser"));
 	if (st == 2)
-		return (err_syn("newline"));
+		return (free_node(*root), err_syn("newline"));
 	if (st == 3 || toks[i].type != T_EOF)
-		return (err_syn(toks[i].lex));
+		return (free_node(*root), err_syn(toks[i].lex));
 	return (0);
 }

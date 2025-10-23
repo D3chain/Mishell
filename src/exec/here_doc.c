@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 18:56:49 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/19 13:47:10 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/23 11:44:18 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static int	here_doc_capture(struct s_shell *sh,
 	}
 	close_set(&redir->fd[1]);
 	waitpid(pid, &st, 0);
+	sh_install_signal_mode(0);
 	if (WIFEXITED(st))
 		return (WEXITSTATUS(st));
 	else if (WIFSIGNALED(st))
