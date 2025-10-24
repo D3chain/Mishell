@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 11:28:47 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/19 13:47:01 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/24 12:31:36 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,16 @@ static int	wait_children(int n, int last_pid)
 
 static int	run_simple_pipe(struct s_shell *sh, struct s_node *node)
 {
+	int	st;
+
 	if (node->kind == N_SIMPLE)
 	{
-		redir_apply(node->u.s_simple.redv);
+		st = redir_apply(node->u.s_simple.redv);
+		if (st)
+		{
+			sh_cleanup(sh);
+			exit(st);
+		}
 		if (is_builtin(node->u.s_simple.argv[0]))
 			exec_builtin(sh, NULL, node->u.s_simple.argv);
 		else

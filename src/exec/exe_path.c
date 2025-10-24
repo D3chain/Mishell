@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 15:12:12 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/16 15:18:28 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/24 12:46:08 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ static int	check_path(char *path, int mode)
 		if (S_ISDIR(sb.st_mode))
 			return (free(path), 1261);
 		if (access(path, X_OK) != 0)
-			return (free(path), 127);
+			return (free(path), 126);
 		return (0);
 	}
 	if (mode == 1)
 		return (free(path), -1);
-	return (free(path), 126);
+	return (free(path), 127);
 }
 
 int	find_valid_path(char **p_path_cmd, char *path_val, char *cmd)
