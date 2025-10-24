@@ -6,7 +6,7 @@
 /*   By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:01:15 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/21 15:36:16 by garivoir         ###   ########.fr       */
+/*   Updated: 2025/10/24 14:05:07 by garivoir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,17 @@ int	sh_exit(struct s_shell *sh, char **argv)
 	printf("exit\n");
 	if (!argv[1])
 		(sh_cleanup(sh), exit(0));
-	if (argv[1] && argv[2])
-		return (sh_cleanup(sh),
-			write(2, "minishell: exit: too many arguments\n", 36), 1);
 	if (sh_exit_numeric_code(argv[1]) != 0)
 	{
 		write(2, "minishell: exit: ", 17);
 		write(2, argv[1], ft_strlen(argv[1]));
 		write(2, ": numeric argument required\n", 29);
 		exit(2);
+	}
+	if (argv[1] && argv[2])
+	{
+		write(2, "minishell: exit: too many arguments\n", 36);
+		return (1);
 	}
 	exit_code = ft_atol(argv[1]);
 	exit((unsigned char)exit_code);
