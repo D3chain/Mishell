@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: echatela <echatela@student.42.fr>          +#+  +:+       +#+         #
+#    By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/25 09:10:51 by echatela          #+#    #+#              #
-#    Updated: 2025/09/17 18:13:42 by echatela         ###   ########.fr        #
+#    Updated: 2025/10/21 16:38:59 by garivoir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,8 +34,10 @@ SRCS = 	ft_isalpha.c \
 		ft_memcmp.c \
 		ft_strnstr.c \
 		ft_atoi.c \
+		ft_atol.c \
 		ft_calloc.c \
 		ft_strdup.c \
+		ft_strndup.c \
 		ft_substr.c \
 		ft_strjoin.c \
 		ft_strtrim.c \

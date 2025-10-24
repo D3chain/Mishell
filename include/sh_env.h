@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh_env.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 14:44:07 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/15 17:04:17 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/23 16:27:30 by garivoir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,28 @@
 
 # include "shell.h"
 
-struct s_shell;
+struct	s_shell;
+
+enum { ENV_IN, ENV_OUT
+};
 
 struct s_env
 {
 	char			*var;
 	char			*key;
 	char			*val;
+	int				in_out;
+
 	struct s_env	*next;
 };
 
-int		env_create_list(struct s_shell *sh, char **env_old);
+int		env_size(struct s_env *env);
+void	env_free(struct s_env **env);
 void	env_clear_list(struct s_env **env);
 char	**env_create_tab(struct s_env *env);
-void	env_free(struct s_env **env);
-int		env_before_equal_sign(char *var);
-int		env_after_equal_sign(char *var);
-void	env_var_name_value(struct s_env *env);
+char	*env_get_val(struct s_env *env, char *key);
 int		env_new(char *var, struct s_env **result);
+int		env_create_list(struct s_shell *sh, char **env_old);
+int		env_change_var(struct s_shell *sh, char *key, char *new_val);
 
 #endif

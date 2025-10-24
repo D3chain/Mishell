@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   sh_par.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 18:44:06 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/16 11:48:40 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/23 16:30:39 by garivoir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SH_PAR_H
 # define SH_PAR_H
 
-#include "shell.h"
-#include "sh_lex.h"
+# include "shell.h"
+# include "sh_lex.h"
 
-struct s_tok;
-struct s_shell;
+struct	s_tok;
+struct	s_shell;
 
 enum { N_SIMPLE, N_SUBSHELL, N_PIPELINE, N_ANDOR
 };
@@ -47,7 +47,7 @@ struct s_node
 	union
 	{
 		struct s_cmd		s_simple;
-		struct	 
+		struct
 		{
 			struct s_node	*list;
 		} s_subshell;
@@ -74,6 +74,6 @@ void			free_and_or(struct s_node *and_or);
 void			free_pipeline(struct s_node *pipeline);
 void			free_simple(struct s_node *simple);
 
-void 			ast_print(struct s_shell *sh, struct s_node *root);
+void			ast_print(struct s_shell *sh, struct s_node *root);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:11:37 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/19 12:26:36 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/24 11:59:39 by echatela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include <errno.h>
 # include <unistd.h>
 
-extern volatile sig_atomic_t g_sigstate;
+extern volatile sig_atomic_t	g_sigstate;
 
 struct s_shell
 {

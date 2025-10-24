@@ -3,43 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echatela <echatela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: garivoir <garivoir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:01:40 by echatela          #+#    #+#             */
-/*   Updated: 2025/10/16 16:49:10 by echatela         ###   ########.fr       */
+/*   Updated: 2025/10/23 21:22:31 by garivoir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*------------------------------*/
-/* env built-in					*/
-/*------------------------------*/
-
 #include "shell.h"
-
-/*------------------------------*/
-/* minishell env				*/
-/* built-in main function		*/
-/*------------------------------*/
-// int	ms_env(char **cmd, struct s_env *envp, int last_st)
-// {
-// 	if (!cmd || !cmd[0])
-// 		return (1);	//error
-// 	if (ft_strcmp(cmd[0], "env") != 0)
-// 		return (1);	//error
-// 	if (!envp)
-// 		return (0);
-// 	while (envp)
-// 	{
-// 		if (envp->var)
-// 			printf("%s\n", envp->var);
-// 		envp = envp->next;
-// 	}
-// 	return (0);
-// }
+#include "sh_env.h"
 
 int	sh_env(struct s_shell *sh, char **argv)
 {
-	(void)sh;
-	(void)argv;
+	struct s_env	*tmp_env;
+
+	if (argv[1])
+	{
+		write(2, "minishell: env: ", 16);
+		write(2, argv[1], ft_strlen(argv[1]));
+		write(2, ": No such file or directory\n", 28);
+		return (127);
+	}
+	tmp_env = sh->env;
+	while (tmp_env)
+	{
+		if (tmp_env->in_out == ENV_IN && tmp_env->var)
+			printf("%s\n", tmp_env->var);
+		tmp_env = tmp_env->next;
+	}
 	return (0);
 }

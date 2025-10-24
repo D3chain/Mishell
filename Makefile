@@ -6,7 +6,7 @@
 #    By: echatela <echatela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/05 12:02:13 by echatela          #+#    #+#              #
-#    Updated: 2025/10/19 13:48:02 by echatela         ###   ########.fr        #
+#    Updated: 2025/10/24 11:58:10 by echatela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,9 +25,9 @@ CORE_SRCS		:=	repl.c signals.c print_tree.c
 LEXER_SRCS		:=	lexer.c tok.c
 PARSER_SRCS		:=	parser.c par_cmd.c free_tree.c
 EXPAND_SRCS		:=	expand.c exp_var.c exp_wc_arg.c exp_wc_red.c exp_unquote.c exp_split_arg.c
-BUILTINS_SRCS	:=	pwd.c cd.c echo.c env.c exit.c export.c unset.c
+BUILTINS_SRCS	:=	pwd.c cd.c echo.c env.c exit.c export.c export_utils.c export_no_arg.c export_scan_arg.c unset.c
 EXEC_SRCS		:=	exe_run.c exe_pipeline.c exe_simple.c exec_command.c redir.c here_doc.c exe_path.c exe_builtin.c
-ENV_SRCS		:=	env_create_list.c env_create_tab.c env_new_utils.c env_new.c
+ENV_SRCS		:=	env_create_list.c env_utils.c env_new.c
 ERR_SRCS		:=	error.c fill.c
 UTIL_SRCS		:=	char.c vec.c vec_free.c str_builder.c exit_utils.c close_set.c
 
